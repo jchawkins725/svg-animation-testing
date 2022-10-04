@@ -88,7 +88,7 @@
       path.style.strokeDashoffset = pathLength;
       window.addEventListener("scroll", function (e) {
         // What % down is it?
-        var scrollPercentage = (path.getBoundingClientRect().top - window.innerHeight) / ((window.innerHeight / 2) * -1);
+        var scrollPercentage = (path.getBoundingClientRect().top - window.innerHeight + 200) / ((window.innerHeight / 2) * -1);
         if (scrollPercentage >= 0 && scrollPercentage <= 1) {
           // Length to offset the dashes
           var drawLength = pathLength * scrollPercentage;
@@ -97,6 +97,8 @@
         }
         if (scrollPercentage >= 0.99) {
           path.style.strokeDasharray = "none";
+        } else if (scrollPercentage <= 0){
+          path.style.strokeDashoffset = pathLength;
         } else {
           path.style.strokeDasharray = pathLength + " " + pathLength;
         }
