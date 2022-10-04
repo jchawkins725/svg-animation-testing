@@ -1,0 +1,107 @@
+<html>
+  <head> </head>
+  <body style="margin: 0px">
+    <section style="width: 100%; height: 1200px; color: white; font-size: 50px; background: rgb(84, 84, 84)">Top Content</section>
+    <section>
+      <svg
+        version="1.1"
+        xmlns="http://www.w3.org/2000/svg"
+        xmlns:xlink="http://www.w3.org/1999/xlink"
+        x="0px"
+        y="0px"
+        viewBox="0 0 1920 500"
+        style="enable-background: new 0 0 1920 500"
+        xml:space="preserve"
+        class="svg-threads"
+      >
+        <path
+          class="thread"
+          d="M0,218c257.3,16.9,396.1,53.8,476,86c16.9,6.8,67.2,27.9,138.7,47.3c102.1,27.7,183,34.5,202.7,36
+		c0,0,180.1,13.8,450.7-81.3c10.5-3.7,36-13,54.7-37.3c5.3-7,28.9-37.7,18.7-73.3c-9.4-32.7-42-50.9-69.3-54.7
+		c-33.1-4.6-71.6,10.2-88,42.7c-1.2,2.3-16.9,34.7-1.3,65.3c11,21.7,32.2,31.5,52,38.7c83.5,30,168.6,20.7,174.7,20
+		c88.9-10.5,156.5-36.1,218.7-60c39.2-15.1,101.9-41.4,166.7-60c16.1-4.6,49.9-13.8,94.7-16c16.5-0.8,30.3-0.5,40,0"
+        />
+      </svg>
+      <style>
+        .thread {
+          stroke-dasharray: 4000;
+          stroke-dashoffset: 4000;
+          fill: #ffffff;
+          stroke: #50a684;
+          stroke-width: 17;
+          stroke-miterlimit: 10;
+        }
+        .thread-animation {
+          animation: dash 3s linear forwards;
+        }
+        @keyframes dash {
+          to {
+            stroke-dashoffset: 0;
+          }
+        }
+      </style>
+      <script>
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.querySelector("path").classList.add("thread-animation");
+            }
+          });
+        });
+        // Tell the observer which elements to track
+        observer.observe(document.querySelector(".svg-threads"));
+      </script>
+    </section>
+    <section style="width: 100%; height: 1200px; color: white; font-size: 50px; background: rgb(84, 84, 84)">More Content</section>
+    <svg
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      xmlns:xlink="http://www.w3.org/1999/xlink"
+      x="0px"
+      y="0px"
+      viewBox="0 0 1920 500"
+      style="enable-background: new 0 0 1920 500"
+      xml:space="preserve"
+      class="svg-threads"
+    >
+      <path
+        class="thread-two"
+        id="thread-scroll"
+        d="M0,218c257.3,16.9,396.1,53.8,476,86c16.9,6.8,67.2,27.9,138.7,47.3c102.1,27.7,183,34.5,202.7,36
+    c0,0,180.1,13.8,450.7-81.3c10.5-3.7,36-13,54.7-37.3c5.3-7,28.9-37.7,18.7-73.3c-9.4-32.7-42-50.9-69.3-54.7
+    c-33.1-4.6-71.6,10.2-88,42.7c-1.2,2.3-16.9,34.7-1.3,65.3c11,21.7,32.2,31.5,52,38.7c83.5,30,168.6,20.7,174.7,20
+    c88.9-10.5,156.5-36.1,218.7-60c39.2-15.1,101.9-41.4,166.7-60c16.1-4.6,49.9-13.8,94.7-16c16.5-0.8,30.3-0.5,40,0"
+      />
+    </svg>
+    <style>
+      .thread-two {
+        fill: #ffffff;
+        stroke: #50a684;
+        stroke-width: 17;
+        stroke-miterlimit: 10;
+      }
+    </style>
+    <script>
+      var path = document.querySelector("#thread-scroll");
+      var pathLength = path.getTotalLength();
+      path.style.strokeDasharray = pathLength + " " + pathLength;
+      path.style.strokeDashoffset = pathLength;
+      window.addEventListener("scroll", function (e) {
+        // What % down is it?
+        var scrollPercentage = (path.getBoundingClientRect().top - window.innerHeight) / ((window.innerHeight / 2) * -1);
+        if (scrollPercentage >= 0 && scrollPercentage <= 1) {
+          // Length to offset the dashes
+          var drawLength = pathLength * scrollPercentage;
+          // Draw in reverse
+          path.style.strokeDashoffset = pathLength - drawLength;
+        }
+        if (scrollPercentage >= 0.99) {
+          path.style.strokeDasharray = "none";
+        } else {
+          path.style.strokeDasharray = pathLength + " " + pathLength;
+        }
+      });
+    </script>
+    <section style="width: 100%; height: 1200px; color: white; font-size: 50px; background: rgb(84, 84, 84)">Bottom Content</section>
+  </body>
+</html>
