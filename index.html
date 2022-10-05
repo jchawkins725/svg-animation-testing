@@ -1,7 +1,8 @@
 <html>
-  <head> </head>
+  <head>
+  </head>
   <body style="margin: 0px">
-    <section style="width: 100%; height: 1200px; color: white; font-size: 50px; background: rgb(84, 84, 84)">Top Content</section>
+    <section style="width: 100%; height: calc(100vh - 20%); color: black; font-size: 50px; background: #EBEBEB; padding: 10%;">Single animation thread below</section>
     <section>
       <svg
         version="1.1"
@@ -52,7 +53,7 @@
         observer.observe(document.querySelector(".svg-threads"));
       </script>
     </section>
-    <section style="width: 100%; height: 1200px; color: white; font-size: 50px; background: rgb(84, 84, 84)">More Content</section>
+    <section style="width: 100%; height: calc(100vh - 20%); color: black; font-size: 50px; background: #EBEBEB; padding: 10%;">Scroll thread animation below</section>
     <svg
       version="1.1"
       xmlns="http://www.w3.org/2000/svg"
@@ -97,13 +98,58 @@
         }
         if (scrollPercentage >= 0.99) {
           path.style.strokeDasharray = "none";
-        } else if (scrollPercentage <= 0){
+        } else if (scrollPercentage <= 0) {
           path.style.strokeDashoffset = pathLength;
         } else {
           path.style.strokeDasharray = pathLength + " " + pathLength;
         }
       });
     </script>
-    <section style="width: 100%; height: 1200px; color: white; font-size: 50px; background: rgb(84, 84, 84)">Bottom Content</section>
+    <section style="width: 100%; height: calc(100vh - 20%); color: black; font-size: 50px; background: white; padding:10%;">Background separator extra curvy below</section>
+    <section style="width: 100%; height: calc(100vh - 20%); color: black; font-size: 50px; background: #EBEBEB;position:relative; padding-top:10%;">
+      <svg class="separator separator--up" width="100%" height="100%" viewBox="0 0 100 10" preserveAspectRatio="none"> <path class="path-anim separator__path" data-path-to="M 0 0 C 17 21.6 35.2 1.2 50 1.4 C 65.2 1.5 83 21.6 100 0 L 0 0 Z" vector-effect="non-scaling-stroke" d="M 0 0 C 23 0 35 0 50 0 C 65 0 74 0 100 0 L 0 0 Z"></path> </svg>
+      <h1 style="margin-left:10%">so curvy!</h1>
+    </section>
+    <section style="width: 100%; height: calc(100vh - 20%); color: black; font-size: 50px; background: white;position:relative; padding-top:10%;"><h1 style="margin-left:10%">Less curvy separator below</h1></section>
+    <section style="width: 100%; height: calc(100vh + 20%); color: black; font-size: 50px; background: #EBEBEB;position:relative; padding-top:10%;">
+      <svg class="separator separator--up" width="100%" height="100%" viewBox="0 0 100 10" preserveAspectRatio="none"> <path class="path-anim separator__path" data-path-to="M 0 0 C 30 0 47 12 100 0 L 0 0 Z" vector-effect="non-scaling-stroke" d="M 0 0 C 30 0 47 0 100 0 L 0 0 Z"></path> </svg>
+      <h1 style="margin-left:10%">bottom content</h1>
+      <style>
+        .separator {
+          display: block;
+          position: absolute;
+          z-index: 1000;
+          pointer-events: none;
+          width: 100%;
+          height: 150px;
+          fill: white;
+        }
+        .separator--up {
+          top: -1px;
+        }
+      </style>
+          <script src="https://unpkg.co/gsap@3/dist/gsap.min.js"></script>
+          <script src="https://unpkg.com/gsap@3/dist/ScrollTrigger.min.js"></script>
+      <script>
+        const paths = [...document.querySelectorAll("path.path-anim")];
+        paths.forEach((el) => {
+          const svgEl = el.closest("svg");
+          const pathTo = el.dataset.pathTo;
+          gsap
+            .timeline({
+              scrollTrigger: {
+                trigger: svgEl,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true,
+              },
+            })
+            .to(el, {
+              ease: "none",
+              attr: { d: pathTo },
+            });
+        });
+      </script>
+    </section>
   </body>
 </html>
